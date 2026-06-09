@@ -5,7 +5,7 @@ const { schema } = mongoose;
 const userSchema = new schema({
     firstName: {
         type: String,
-        require: true,
+        required: true,
         minLength: 3,
         maxLength: 50,
         trim: true
@@ -20,11 +20,10 @@ const userSchema = new schema({
         type: Number,
         min: 6,
         max: 80,
-        require: true
     },
     emailId: {
         type: String,
-        require: true,
+        required: true,
         minLength: 12,
         maxLength: 30,
         unique: true,
@@ -36,7 +35,7 @@ const userSchema = new schema({
         type: String,
         minLength: 8,
         maxLength: 20,
-        require: true,
+        required: true,
     },
     role: {
         type: String,
@@ -49,5 +48,5 @@ const userSchema = new schema({
 
 }, { timeStamps: true });
 
-const userModel = new mongoose.model("users", userSchema);
+const userModel = new mongoose.model("user", userSchema);
 module.exports = userModel;
