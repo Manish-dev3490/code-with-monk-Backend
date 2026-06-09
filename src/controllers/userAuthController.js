@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const userModel = require("../models/user");
 const jwt = require("jsonwebtoken");
-const validateMethods=require('../utils/validationData')
+const validateMethods = require('../utils/validationData')
 
 // controller for signUp route
 const signUpHandler = async (req, res) => {
@@ -50,3 +50,9 @@ const signUpHandler = async (req, res) => {
 const logInHandler = async (req, res) => { };
 // controller for logOut route
 const logOutHandler = async (req, res) => { };
+
+module.exports = {
+    signUpHandler,
+    logInHandler,
+    logOutHandler
+}
