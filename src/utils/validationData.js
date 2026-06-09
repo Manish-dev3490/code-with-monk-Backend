@@ -28,6 +28,23 @@ function validateSignUpApi(reqBody) {
     }
 }
 
+
+function validateLoginApi(req) {
+
+    const { email, password } = req.body;
+    if (!email) throw new Error("please enter the email");
+
+    if (!password) throw new Error("please enter the  password");
+
+
+    if (!validator.isEmail(email)) {
+        throw new Error("please enter the valid email");
+    }
+
+
+}
+
 module.exports={
-    validateSignUpApi
+    validateSignUpApi,
+    validateLoginApi
 }
