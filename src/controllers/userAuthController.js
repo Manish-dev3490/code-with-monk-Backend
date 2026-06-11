@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const userModel = require("../models/user");
 const jwt = require("jsonwebtoken");
 const validateMethods = require("../utils/validationData");
+const redisClient = require("../config/redisConnection");
 
 // controller for signUp route
 const signUpHandler = async (req, res) => {
@@ -50,9 +51,9 @@ const signUpHandler = async (req, res) => {
 const logInHandler = async (req, res) => {
     try {
         validateMethods.validateLoginApi(req);
-        const { email, password } = req.body;
+        const { emailId, password } = req.body;
         // check user exist
-        const user = await User.findOne({ email });
+        const user = await userModel.findOne({ emailId });
         if (!user) {
             throw new Error("Invalid credentials");
         }
@@ -64,7 +65,7 @@ const logInHandler = async (req, res) => {
             const token = jwt.sign(
                 {
                     emailId,
-                    _id: newUser._id,
+                    _id: user._id,
                 },
                 process.env.JWT_KEY,
                 {
@@ -84,7 +85,14 @@ const logInHandler = async (req, res) => {
     }
 };
 // controller for logOut route
-const logOutHandler = async (req, res) => { };
+const logOutHandler = async (req, res) => { 
+        const { token } = req.cookies;
+    const payload = jwt.decode(token);
+    await redisClient.set(`token:${token}`, "blocked");
+    await redisClient.expireAt(`token:${token}`, payload.exp)
+    res.cookie("token", null, { expires: new Date(Date.now()) });
+    res.send("logged out successfully");
+};
 
 module.exports = {
     signUpHandler,

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { schema } = mongoose;
 
 
-const userSchema = new schema({
+const userSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: true,
@@ -34,7 +34,7 @@ const userSchema = new schema({
     password: {
         type: String,
         minLength: 8,
-        maxLength: 20,
+        maxLength: 65,
         required: true,
     },
     role: {
@@ -46,7 +46,7 @@ const userSchema = new schema({
         type: [String]
     }
 
-}, { timeStamps: true });
+}, { timestamps: true });
 
 const userModel = new mongoose.model("user", userSchema);
 module.exports = userModel;

@@ -31,13 +31,13 @@ function validateSignUpApi(reqBody) {
 
 function validateLoginApi(req) {
 
-    const { email, password } = req.body;
-    if (!email) throw new Error("please enter the email");
+    const { emailId, password } = req.body;
+    if (!emailId) throw new Error("please enter the email");
 
     if (!password) throw new Error("please enter the  password");
 
 
-    if (!validator.isEmail(email)) {
+    if (!validator.isEmail(emailId)) {
         throw new Error("please enter the valid email");
     }
 
