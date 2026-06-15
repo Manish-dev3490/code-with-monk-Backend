@@ -5,10 +5,11 @@ require('dotenv').config({
 const connectToMONGODB = require('../src/config/mongoConnection')
 const redisClient = require("./config/redisConnection")
 const authRouter = require("./routes/userAuth")
+const problemRouter = require("./routes/problemCreation")
 const app = express();
 const cookieParser = require("cookie-parser");
 
-
+// some middlewares for upcoming requests
 app.use(cookieParser());
 app.use(express.json())
 
@@ -16,6 +17,8 @@ app.use(express.json())
 
 // listed all the routers
 app.use("/user", authRouter)
+app.use("/problem", problemRouter)
+
 
 
 
