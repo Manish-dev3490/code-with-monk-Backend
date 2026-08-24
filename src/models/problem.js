@@ -16,7 +16,7 @@ const problemSchema = new mongoose.Schema({
         required: true
     },
     tags: {
-        type: String,
+        type: [String],
         enum: ['linked list', 'array', 'string', 'dynamic programming', 'trees', 'graph', 'priority queue'],
         required: true
     },
@@ -55,7 +55,7 @@ const problemSchema = new mongoose.Schema({
                 type: String,
                 required: true
             },
-            bolierPlate: {
+            boilerPlate: {
                 type: String,
                 required: true
             }
@@ -72,12 +72,12 @@ const problemSchema = new mongoose.Schema({
         }
     }],
     problemCreator: {
-        type: schema.type.objectId,
-        ref: 'user',
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user",
         required: true
     }
 }, { timestamps: true });
 
-const problemModel = new mongoose.Model("problem", problemSchema);
+const problemModel = mongoose.model("problem", problemSchema);
 
 module.exports = problemModel;

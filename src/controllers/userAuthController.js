@@ -87,12 +87,17 @@ const logInHandler = async (req, res) => {
 };
 // controller for logOut route
 const logOutHandler = async (req, res) => {
-  const { token } = req.cookies;
+ try{
+   const { token } = req.cookies;
   const payload = jwt.decode(token);
   await redisClient.set(`token:${token}`, "blocked");
   await redisClient.expireAt(`token:${token}`, payload.exp);
   res.cookie("token", null, { expires: new Date(Date.now()) });
-  res.send("logged out successfully");
+  res.status(200).send("logged out successfully");
+ }
+ catch(error){
+  res.status(404).send("Error : " + error)
+ }
 };
 
 // logic to register admin
