@@ -8,6 +8,7 @@ const authRouter = require("./routes/userAuth")
 const problemRouter = require("./routes/problemCreation")
 const app = express();
 const cookieParser = require("cookie-parser");
+const { submitRouter } = require('./routes/submit');
 
 // some middlewares for upcoming requests
 app.use(cookieParser());
@@ -18,6 +19,7 @@ app.use(express.json())
 // listed all the routers
 app.use("/user", authRouter)
 app.use("/problem", problemRouter)
+app.use("/submission",submitRouter)
 
 
 
