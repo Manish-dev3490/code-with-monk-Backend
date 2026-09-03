@@ -3,6 +3,7 @@ const userModel = require("../models/user");
 const jwt = require("jsonwebtoken");
 const validateMethods = require("../utils/validationData");
 const redisClient = require("../config/redisConnection");
+const { submissionModel } = require("../models/submission");
 
 // controller for signUp route
 const signUpHandler = async (req, res) => {
@@ -87,23 +88,23 @@ const logInHandler = async (req, res) => {
 };
 // controller for logOut route
 const logOutHandler = async (req, res) => {
- try{
-   const { token } = req.cookies;
-  const payload = jwt.decode(token);
-  await redisClient.set(`token:${token}`, "blocked");
-  await redisClient.expireAt(`token:${token}`, payload.exp);
-  res.cookie("token", null, { expires: new Date(Date.now()) });
-  res.status(200).send("logged out successfully");
- }
- catch(error){
-  res.status(404).send("Error : " + error)
- }
+  try {
+    const { token } = req.cookies;
+    const payload = jwt.decode(token);
+    await redisClient.set(`token:${token}`, "blocked");
+    await redisClient.expireAt(`token:${token}`, payload.exp);
+    res.cookie("token", null, { expires: new Date(Date.now()) });
+    res.status(200).send("logged out successfully");
+  }
+  catch (error) {
+    res.status(404).send("Error : " + error)
+  }
 };
 
 // logic to register admin
 const registerAdminHandler = async (req, res) => {
   try {
-    if(req.user.role==="user")throw new error("invalid credentials");
+    if (req.user.role === "user") throw new error("invalid credentials");
     validateMethods.validateSignUpApi(req.body);
 
     const { password, emailId } = req.body;
@@ -146,9 +147,38 @@ const registerAdminHandler = async (req, res) => {
   }
 };
 
+// controller for delete profile 
+const deleteProfile = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    await userModel.findByIdAndDelete(userId);
+    await submissionModel.deleteMany({ userId });
+    res.status(200).send("your profile is deleted successfully");
+  }
+
+  catch (error) {
+    res.status(400).send("error occured");
+  }
+}
+
+// controller for fetch profile 
+const getProfile = async (req, res) => {
+  try {
+    const user = req.user;
+    res.status(200).json({
+      message: "your profile is fetched successfully", profile: user
+    });
+  }
+
+  catch (error) {
+    res.status(400).send("error occured");
+  }
+}
 module.exports = {
   signUpHandler,
   logInHandler,
   logOutHandler,
   registerAdminHandler,
+  deleteProfile,
+  getProfile
 };
