@@ -80,7 +80,10 @@ const logInHandler = async (req, res) => {
         httpOnly: true,
         sameSite: "lax",
       });
-      res.status(200).send(user);
+      res.status(200).json({
+        message:"you are logged in successfully",
+        data:user
+      });
     }
   } catch (error) {
     res.status(401).send("Error : " + error);

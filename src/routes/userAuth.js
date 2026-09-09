@@ -30,7 +30,7 @@ authRouter.get("/checkAuth", authValidation, (req, res) => {
         };
 
         res.status(200).json({
-            user: reply,
+            data: reply,
             message: "you are already authenticated"
         })
     } catch (error) {
