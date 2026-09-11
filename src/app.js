@@ -9,6 +9,14 @@ const problemRouter = require("./routes/problemCreation")
 const app = express();
 const cookieParser = require("cookie-parser");
 const { submitRouter } = require('./routes/submit');
+const cors = require("cors")
+
+app.use(
+    cors({
+        origin: "http://localhost:5173",
+        credentials: true,
+    })
+);
 
 // some middlewares for upcoming requests
 app.use(cookieParser());
@@ -19,7 +27,7 @@ app.use(express.json())
 // listed all the routers
 app.use("/user", authRouter)
 app.use("/problem", problemRouter)
-app.use("/submission",submitRouter)
+app.use("/submission", submitRouter)
 
 
 

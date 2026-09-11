@@ -86,7 +86,7 @@ const logInHandler = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(401).send("Error : " + error);
+    res.status(401).send("Error : " + error.message);
   }
 };
 // controller for logOut route
