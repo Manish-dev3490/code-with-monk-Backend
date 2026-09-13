@@ -553,18 +553,26 @@ async function getProblemMethod(req, res) {
 // get all problem
 async function getAllProblemMethod(req, res) {
     try {
+        const problems = await Problem.find({});
 
+        res.status(200).json({
+            message: "Problems fetched successfully",
+            data: problems,
+        });
     }
     catch (error) {
-        res.status(500).send("error is : " + error);
+        res.status(500).json({
+            message: "Something went wrong",
+            error: error.message,
+        });
     }
 }
 
 
 // get allproblemSolvedByUser
-const fetchProblemsSolvedByUserdMethod = async (req, res) => {
+async function fetchProblemsSolvedByUserdMethod(req, res) {
+
     try {
-        console.log("hello");
 
         const user = await userModel
             .findById(req.user._id)
