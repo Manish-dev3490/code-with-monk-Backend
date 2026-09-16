@@ -553,7 +553,7 @@ async function getProblemMethod(req, res) {
 // get all problem
 async function getAllProblemMethod(req, res) {
     try {
-        const problems = await Problem.find({});
+        const problems = await problemModel.find({});
 
         res.status(200).json({
             message: "Problems fetched successfully",

@@ -26,7 +26,8 @@ authRouter.get("/checkAuth", authValidation, (req, res) => {
             _id: user._id,
             firstName: user.firstName,
             emailId: user.emailId,
-            problemSolved: user.problemSolved
+            problemSolved: user.problemSolved,
+            role:user.role
         };
 
         res.status(200).json({

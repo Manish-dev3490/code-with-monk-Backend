@@ -10,7 +10,7 @@ problemRouter.put("/update/:_id", adminRegisterValidation, problemUpdationMethod
 problemRouter.delete("/delete/:_id", adminRegisterValidation, problemDeletionMethod)
 
 problemRouter.get("/problemSolvedByUser", authValidation, fetchProblemsSolvedByUserdMethod);
-problemRouter.get("/user",authValidation,getAllProblemMethod);
+problemRouter.get("/getAllProblem",authValidation,getAllProblemMethod);
 problemRouter.get("/:_id", authValidation, getProblemMethod);
 
 module.exports = problemRouter;
