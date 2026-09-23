@@ -1,6 +1,6 @@
 const express = require('express');
 const problemRouter = express.Router();
-const { problemCreationMethod, problemUpdationMethod, problemDeletionMethod, getProblemMethod, fetchProblemsSolvedByUserdMethod,getAllProblemMethod } = require('../controllers/problemCreationControllers');
+const { problemCreationMethod, problemUpdationMethod, problemDeletionMethod, getProblemMethod, fetchProblemsSolvedByUserdMethod,getAllProblemMethod ,fetchProblemSubmissionMethod} = require('../controllers/problemCreationControllers');
 const adminRegisterValidation = require('../middlewares/admin');
 const authValidation = require('../middlewares/auth');
 
@@ -12,6 +12,8 @@ problemRouter.delete("/delete/:_id", adminRegisterValidation, problemDeletionMet
 problemRouter.get("/problemSolvedByUser", authValidation, fetchProblemsSolvedByUserdMethod);
 problemRouter.get("/getAllProblem",authValidation,getAllProblemMethod);
 problemRouter.get("/:_id", authValidation, getProblemMethod);
+problemRouter.get("/submission/:_id", authValidation, fetchProblemSubmissionMethod);
+
 
 module.exports = problemRouter;
 

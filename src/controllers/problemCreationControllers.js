@@ -1,4 +1,5 @@
 const problemModel = require("../models/problem");
+const { submissionModel } = require("../models/submission");
 const userModel = require("../models/user");
 
 const {
@@ -543,7 +544,10 @@ async function getProblemMethod(req, res) {
         if (!problem) return res.status(404).send("problem does not exist in database");
 
 
-        res.status(200).send("your problem is fetched successfully", problem);
+        res.status(200).json({
+            message:"your probem is fetched successfully",
+            data:problem
+        });
     }
     catch (error) {
         res.status(500).send("error is : " + error);
@@ -589,6 +593,30 @@ async function fetchProblemsSolvedByUserdMethod(req, res) {
     }
 };
 
+// to find all submission for a problem 
+async function fetchProblemSubmissionMethod(req, res) {
+    try {
+        const userId = req.user._id;
+        const { _id } = req.params;
+
+        const data = await submissionModel.find({
+            userId: userId,
+            problemId: _id
+        });
+
+        res.status(200).json({
+            message:"your data is fetched successfully",
+            data
+        });
+    }
+    catch (error) {
+        res.status(500).json({
+            message: error.message
+        });
+    }
+}
+
+
 module.exports = {
-    problemCreationMethod, problemUpdationMethod, problemDeletionMethod, getProblemMethod, getAllProblemMethod, fetchProblemsSolvedByUserdMethod
+    problemCreationMethod, problemUpdationMethod, problemDeletionMethod, getProblemMethod, getAllProblemMethod, fetchProblemsSolvedByUserdMethod ,fetchProblemSubmissionMethod
 };
