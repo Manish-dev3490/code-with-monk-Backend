@@ -9,7 +9,8 @@ const problemRouter = require("./routes/problemCreation")
 const app = express();
 const cookieParser = require("cookie-parser");
 const { submitRouter } = require('./routes/submit');
-const cors = require("cors")
+const cors = require("cors");
+const AiRouter = require('./routes/Ai');
 
 app.use(
     cors({
@@ -28,6 +29,7 @@ app.use(express.json())
 app.use("/user", authRouter)
 app.use("/problem", problemRouter)
 app.use("/submission", submitRouter)
+app.use("/ai",AiRouter)
 
 
 
