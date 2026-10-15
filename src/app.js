@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const { submitRouter } = require('./routes/submit');
 const cors = require("cors");
 const AiRouter = require('./routes/Ai');
+const requestRouter = require('./routes/request');
 
 app.use(
     cors({
@@ -30,7 +31,7 @@ app.use("/user", authRouter)
 app.use("/problem", problemRouter)
 app.use("/submission", submitRouter)
 app.use("/ai",AiRouter)
-
+app.use("/request",requestRouter)
 
 
 
