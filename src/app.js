@@ -13,12 +13,13 @@ const cors = require("cors");
 const AiRouter = require('./routes/Ai');
 const requestRouter = require('./routes/request');
 
-app.use(
-    cors({
-        origin: "http://localhost:5173",
-        credentials: true,
-    })
-);
+app.use(cors({
+    origin: [
+        "http://localhost:5173",
+        process.env.FRONTEND_URL
+    ].filter(Boolean),
+    credentials: true
+}));
 
 // some middlewares for upcoming requests
 app.use(cookieParser());
@@ -30,8 +31,8 @@ app.use(express.json())
 app.use("/user", authRouter)
 app.use("/problem", problemRouter)
 app.use("/submission", submitRouter)
-app.use("/ai",AiRouter)
-app.use("/request",requestRouter)
+app.use("/ai", AiRouter)
+app.use("/request", requestRouter)
 
 
 
