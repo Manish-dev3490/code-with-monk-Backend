@@ -81,7 +81,10 @@ const logInHandler = async (req, res) => {
 
       res.cookie("token", token, {
         httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
+        path: "/",
+        maxAge: 3 * 24 * 60 * 60 * 1000,
       });
       res.status(200).json({
         message: "you are logged in successfully",
